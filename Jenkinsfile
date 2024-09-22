@@ -1,4 +1,4 @@
-pipeline {
+ pipeline {
     agent any
     triggers {
         // Jenkins to listen to GitHub webhooks
@@ -13,6 +13,11 @@ pipeline {
          stage('Install NodeJS Dependencies') {
             steps {
                 sh 'npm install'
+            }
+        }
+         stage('Run Application') {
+            steps {
+                sh 'npm start'
             }
         }
     }
