@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 const config = require('./_config'); //to get db connection
-
+//test
 // Define routes
 let index = require('./routes/index');
 let image = require('./routes/image');
