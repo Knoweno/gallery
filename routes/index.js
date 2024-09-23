@@ -46,7 +46,7 @@ router.post('/upload', (req, res)=>{
                 newImage.save()
 
                 
-                res.redirect('/?msg=File uploaded successfully');
+                res.redirect('/?msg=File uploaded successfully!Thanks');
             }
         }
     })
