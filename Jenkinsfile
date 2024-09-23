@@ -78,8 +78,6 @@
                   // sh 'nohup npm start --prefix /usr/share/nginx/html/ > /usr/share/nginx/html/app.log 2>&1 &'
                   //use python script to run the application in the background
                    sh 'sudo python3 /usr/bin/application-scripts/run-Ip1-npm.py'
-                sh 'sleep 3'
-                sh 'curl http://localhost:8002/'
 
                 }
             }
