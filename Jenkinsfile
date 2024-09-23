@@ -56,7 +56,8 @@
 
                         tar --exclude='Jenkinsfile' --exclude='README.md' -czf /usr/share/nginx/html/${TAR_FILE} -C /var/lib/jenkins/workspace/ Moringa-IP1
                     '''
-                     sh "tar -czf '${env.TAR_FILE}' *.js" 
+                    // sh "tar -czf '${env.TAR_FILE}' *.js" 
+                     sh "tar --exclude='Jenkinsfile' --exclude='README.md' -czf '${env.TAR_FILE}' *"
                 }
             }
         }
