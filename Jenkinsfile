@@ -40,7 +40,7 @@
             }
         }
         
-    stage('Unzip files') {
+    stage('Kill running application') {
             steps {
                 script {
                     sh '''
