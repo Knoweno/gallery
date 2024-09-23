@@ -52,12 +52,13 @@
             steps {
                 script {
                     // Archive the tar file, excluding Jenkinsfile and README.md
+                     // Archive the tar file, excluding Jenkinsfile and README.md
                     sh """
-                        tar --exclude='Jenkinsfile' --exclude='README.md' -czf /usr/share/nginx/html/${env.TAR_FILE} -C /usr/share/nginx/html .
+                        tar --exclude='Jenkinsfile' --exclude='README.md' -czf /tmp/deployment/${env.TAR_FILE} -C /usr/share/nginx/html .
                     """
                     
                     // Archive the resulting tar file
-                    archiveArtifacts artifacts: "/usr/share/nginx/html/${env.TAR_FILE}", allowEmptyArchive: false
+                    archiveArtifacts artifacts: "/tmp/deployment/${env.TAR_FILE}", allowEmptyArchive: false
                     echo "Archived ${env.TAR_FILE}"
                 }
             }
