@@ -49,7 +49,7 @@
                             PID=$(lsof -t -i:8002)
                             kill -9 $PID
                         else
-                            echo "No application is using port 8002."
+                            echo "No application is using port 8002..."
                         fi
                     '''
                 }
