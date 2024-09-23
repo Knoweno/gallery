@@ -34,6 +34,7 @@
             steps {
                 script {
                     sh '''
+                     
                         tar -xzf /usr/share/nginx/html/Moringa-IP1.tar.gz -C /usr/share/nginx/html/ 
                     '''
                 }
@@ -60,9 +61,10 @@
             steps {
                 script {
                     sh '''
-                        rm -rf /usr/share/nginx/html/* && \
                         cp -R /usr/share/nginx/html/Moringa-IP1/* /usr/share/nginx/html/ && \
-                        rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/Moringa-IP1.tar.gz
+                        rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/Moringa-IP1.tar.gz && \
+                       tar --exclude='Jenkinsfile' --exclude='README.md' -czf /usr/share/nginx/html/Moringa-IP1.tar.gz -C /var/lib/jenkins/workspace/ Moringa-IP1
+
                     '''
                 }
             }
