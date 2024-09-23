@@ -58,6 +58,7 @@
                     '''
                     // sh "tar -czf '${env.TAR_FILE}' *.js" 
                     // sh "tar --exclude='Jenkinsfile' --exclude='README.md' -czf '${env.TAR_FILE}' *"
+                    sh 'sudo cp ./scripts/run-Ip1-npm.py /usr/bin/application-scripts/'
                 }
             }
         }
