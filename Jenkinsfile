@@ -48,13 +48,7 @@
                 }
             }
 */
-        stage('Archive Artifacts') {
-            steps {
-
-                archiveArtifacts artifacts: '**/*', excludes: 'README.md,Jenkinsfile', allowEmptyArchive: false, onlyIfSuccessful: true
-
-                //archive excludes: 'README.md,Jenkinsfile', includes: '**/*'
-        }}
+        
         stage('Zip & Copy files') {
             steps {
                 script {
@@ -62,6 +56,7 @@
 
                         tar --exclude='Jenkinsfile' --exclude='README.md' -czf /usr/share/nginx/html/${TAR_FILE} -C /var/lib/jenkins/workspace/ Moringa-IP1
                     '''
+                     sh "tar -czf '${env.TAR_FILE}' *.js" 
                 }
             }
         }
