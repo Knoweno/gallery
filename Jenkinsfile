@@ -42,7 +42,7 @@
                     archiveArtifacts artifacts: "/usr/share/nginx/html/${env.TAR_FILE}", allowEmptyArchive: false
                     echo "Archived ${env.TAR_FILE}"
                     archiveArtifacts artifacts: '*.tar.gz'
-                }*/
+                }
                     //archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
                     archiveArtifacts artifacts: '*.tar.gz', followSymlinks: false
                 }
