@@ -86,7 +86,7 @@
            stage('Cleanup Workspace') {
             steps {
                 echo "Waiting for 1 minute before continuing..."
-                   //sh 'sleep 60'
+                   sh 'sleep 180'
                  echo 'Clean....'
                 // Clean up the workspace to remove all files created during the build
                 cleanWs()
