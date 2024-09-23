@@ -77,7 +77,7 @@
                    //sh 'nohup npm start --prefix /usr/share/nginx/html/ &'
                   // sh 'nohup npm start --prefix /usr/share/nginx/html/ > /usr/share/nginx/html/app.log 2>&1 &'
                   //use python script to run the application in the background
-                   sh 'python3 /usr/bin/application-scripts/run-Ip1-npm.py'
+                   sh 'sudo python3 /usr/bin/application-scripts/run-Ip1-npm.py'
 
                 }
             }
