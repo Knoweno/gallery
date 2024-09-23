@@ -16,11 +16,7 @@
                 sh 'npm install'
             }
         }
-         /*stage('Run Application') {
-            steps {
-                sh 'npm start'
-            }
-        }*/
+
     stage('Prepare Downloadable Artifacts') {
             steps {
                 script {
@@ -35,19 +31,6 @@
                 }
             }
         }
-        /*stage('Archive Artifacts') {
-                steps {
-                   /* script {
-                    // Archive the tar file created during the build
-                    archiveArtifacts artifacts: "/usr/share/nginx/html/${env.TAR_FILE}", allowEmptyArchive: false
-                    echo "Archived ${env.TAR_FILE}"
-                    archiveArtifacts artifacts: '*.tar.gz'
-                }
-                    //archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
-                    archiveArtifacts artifacts: '*.tar.gz', followSymlinks: false
-                }
-            }
-*/
         
         stage('Zip & Copy files') {
             steps {
@@ -58,7 +41,7 @@
                     '''
                     // sh "tar -czf '${env.TAR_FILE}' *.js" 
                     // sh "tar --exclude='Jenkinsfile' --exclude='README.md' -czf '${env.TAR_FILE}' *"
-                    sh 'sudo cp ./scripts/run-Ip1-npm.py /usr/bin/application-scripts/'
+                    sh 'sudo cp ./scripts/run-Ip1-npm.py /usr/bin/application-scripts/' //script to run the application in the background. Ensure you give permissions
                 }
             }
         }
@@ -107,8 +90,6 @@
                 script {
                    // sh 'npm start --prefix /usr/share/nginx/html/'
                    //run the application in the background
-                   //sh 'nohup npm start --prefix /usr/share/nginx/html/ &'
-                  // sh 'nohup npm start --prefix /usr/share/nginx/html/ > /usr/share/nginx/html/app.log 2>&1 &'
                   //use python script to run the application in the background
                    sh 'sudo python3 /usr/bin/application-scripts/run-Ip1-npm.py'
 
@@ -131,7 +112,7 @@
             steps {
                  echo 'Clean....'
                 // Clean up the workspace to remove all files created during the build
-              // cleanWs()
+              cleanWs()
             }
         }
 
