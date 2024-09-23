@@ -117,12 +117,19 @@
             }
         }*/
         
-        stage('SLACK...')
-        {
-            steps{
-                slackSend botUser: true, channel: 'C07NEKL3JMU', color: '#FF0000', message: '${env.BUILD_NUMBER} test from jenkins', teamDomain: 'Knowen_IP1', tokenCredentialId: 'JenkinsSlackConnection'
-            }
-        }
+        stage('SLACK...') {
+        steps {
+        slackSend(
+            botUser: true, 
+            channel: 'C07NEKL3JMU', 
+            color: '#36a64f',  // Green for success
+            message: "Deployment to Render successful! Build ID: ${env.BUILD_ID}. Check the deployed site: https://gallery-gytx.onrender.com", 
+            teamDomain: 'Knowen_IP1', 
+            tokenCredentialId: 'JenkinsSlackConnection'
+        )
+    }
+}
+
         /*
         stage('Slack Notification') {
              steps {
