@@ -19,7 +19,7 @@ mongoose.connect(`${mongodb_url}${dbName}`,{ useNewUrlParser: true , useUnifiedT
 // test if the database has connected successfully
 let db = mongoose.connection;
 db.once('open', ()=>{
-    console.log('Database connected successfully')
+    console.log('Database connected successfully.....')
 })
 
 // Initializing the app
