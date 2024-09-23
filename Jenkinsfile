@@ -32,7 +32,7 @@
                 sh 'npm install'
             }
         }
-            stage('Deploy to Render.com') {
+        stage('Deploy to Render.com') {
                         steps {
                             script {
                                 def response = sh(script: """
@@ -111,16 +111,6 @@
             }
         }*/
 
-        /*stage('SLACK...')
-        {
-            steps{
-                slackSend (
-                channel: '$${SLACK_CHANNEL}', // Replace with your Slack channel name
-                color: '#FF0000',
-                message: "Jenkins build *${env.JOB_NAME}* #${env.BUILD_NUMBER} has *FAILED*. Check details: ${env.BUILD_URL}"
-            )
-            }
-        }*/
         /*
         stage('SLACK...') {
         steps {
@@ -137,7 +127,7 @@
 
 
 
-    stage('SLACK 223...') { 
+    stage('Send Slack Notification') { 
             steps {
                 slackSend(
                     botUser: true, 
@@ -145,7 +135,7 @@
                     color: '#36a64f',  // Green for success
                     message: "Deployment to Render is successful! Build ID: ${env.BUILD_ID}. Check the deployed site: https://gallery-gytx.onrender.com", 
                     teamDomain: 'Knowen_IP1', 
-                    tokenCredentialId: 'JenkinsSlackConnection' // Uses the webhook from the Jenkins credentials
+                    tokenCredentialId: 'JenkinsSlackConnection'
                 )
             }
         }
