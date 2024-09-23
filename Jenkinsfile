@@ -62,8 +62,7 @@
                 script {
                     sh '''
                 
-                    echo "Waiting for 1 minute before continuing..."
-                    sleep 60
+                    
 
                         cp -R /usr/share/nginx/html/Moringa-IP1/* /usr/share/nginx/html/ && \
                         rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/Moringa-IP1.tar.gz 
@@ -83,6 +82,8 @@
 
            stage('Cleanup Workspace') {
             steps {
+                echo "Waiting for 1 minute before continuing..."
+                    sleep 60
                  echo 'Clean....'
                 // Clean up the workspace to remove all files created during the build
                 cleanWs()
