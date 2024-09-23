@@ -3,8 +3,10 @@
     triggers {
         // Jenkins to listen to GitHub webhooks
         githubPush()
+        
     }
       environment {
+        DEPLOY_HOOK_URL = 'https://api.render.com/deploy/srv-crohik08fa8c738rt07g?key=E0Tx2vGH97w' 
         RENDER_API_KEY = credentials('render-api-key') // Store your Render API key in Jenkins credentials
         SERVICE_ID = 'gallery' // Replace with your Render service ID //https://gallery-gq2n.onrender.com
         RENDER_URL = 'https://api.render.com/deploy/srv-croglm56l47c73fnhddg?key=wEe8ff0bDFE' // Render API endpoint for deployment
@@ -15,13 +17,23 @@
                 git credentialsId: 'GitConnect', url: 'https://github.com/Knoweno/gallery.git'
             }
         }
-         stage('Install NodeJS Dependencies') {
+        stage('Install NodeJS Dependencies') {
             steps {
                 sh 'npm install'
             }
         }
-
-    stage('Prepare Downloadable Artifacts') {
+stage('Deploy to Render122') {
+            steps {
+                script {
+                    def response = sh(script: """
+                        curl -X POST ${DEPLOY_HOOK_URL}
+                    """, returnStdout: true).trim()
+                    
+                    echo "Deployment Response: ${response}"
+                }
+            }
+        }
+        stage('Prepare Downloadable Artifacts') {
             steps {
                 script {
                     def buildNumber = env.BUILD_NUMBER
@@ -93,7 +105,7 @@
                 }
             }
         
-        stage('Deploy Application') {
+        stage('Deploy Application to GCP') {
             steps {
                 script {
                     sh '''
