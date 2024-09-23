@@ -12,9 +12,14 @@
         RENDER_URL = 'https://api.render.com/deploy/srv-croglm56l47c73fnhddg?key=wEe8ff0bDFE' // Render API endpoint for deployment
         
 
-        SLACK_WEBHOOK = credentials('JenkinsSlackConnection') // Use the webhook URL from credentials
-        RENDER_SITE_URL = 'https://gallery-gytx.onrender.com' // Your deployed Render site URL
-        SLACK_CHANNEL = 'C07NEKL3JMU'  // Your Slack channel ID
+        //SLACK_WEBHOOK = credentials('JenkinsSlackConnection') // Use the webhook URL from credentials
+        //RENDER_SITE_URL = 'https://gallery-gytx.onrender.com' // Your deployed Render site URL
+        //SLACK_CHANNEL = 'C07NEKL3JMU'  // Your Slack channel ID
+
+
+        RENDER_SITE_URL = 'https://gallery-gytx.onrender.com'
+        SLACK_CHANNEL = 'C07NEKL3JMU'
+        SLACK_WEBHOOK = credentials('JenkinsSlackConnection')
     }
     stages {
         stage('Checkout Code') {
@@ -116,19 +121,34 @@
             )
             }
         }*/
-        
+        /*
         stage('SLACK...') {
         steps {
         slackSend(
             botUser: true, 
             channel: 'C07NEKL3JMU', 
             color: '#36a64f',  // Green for success
-            message: "Deployment to Render successful! Build ID: ${env.BUILD_ID}. Check the deployed site: https://gallery-gytx.onrender.com", 
+            message: "Deployment to Render is successful! Build ID: ${env.BUILD_ID}. Check the deployed site here: https://gallery-gytx.onrender.com", 
             teamDomain: 'Knowen_IP1', 
             tokenCredentialId: 'JenkinsSlackConnection'
         )
     }
-}
+}*/
+
+
+
+    stage('SLACK...') {
+            steps {
+                slackSend(
+                    botUser: true, 
+                    channel: "${env.SLACK_CHANNEL}", 
+                    color: '#36a64f',  // Green for success
+                    message: "Deployment to Render successful! Build ID: ${env.BUILD_ID}. Check the deployed site: ${env.RENDER_SITE_URL}", 
+                    teamDomain: 'Knowen_IP1', 
+                    tokenCredentialId: "${env.SLACK_WEBHOOK}" // Uses the webhook from the Jenkins credentials
+                )
+            }
+        }
 
         /*
         stage('Slack Notification') {
@@ -155,7 +175,7 @@
         }*/
  
             
-        /*stage('Stop & Undeploy on GCP') {
+        stage('Stop & Undeploy on GCP') {
                 steps {
                     script {
                         sh '''
@@ -170,7 +190,7 @@
                         sh 'sleep 10'
                     }
                 }
-            }*/
+            }
         
         stage('Deploy Application to GCP') {
             steps {
