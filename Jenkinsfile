@@ -63,8 +63,7 @@
                 script {
                     sh '''
                         cp -R /usr/share/nginx/html/Moringa-IP1/* /usr/share/nginx/html/ && \
-                        rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/Moringa-IP1.tar.gz && \
-
+                        rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/Moringa-IP1.tar.gz 
                     '''
                 }
             }
