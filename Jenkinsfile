@@ -53,7 +53,7 @@
                             echo "No application is using port 8002..."
                         fi
                     '''
-                     //sh 'sleep 180'
+                     sh 'sleep 180'
                 }
             }
         }
@@ -62,8 +62,6 @@
             steps {
                 script {
                     sh '''
-                
-                    
 
                         cp -R /usr/share/nginx/html/Moringa-IP1/* /usr/share/nginx/html/ && \
                         rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/Moringa-IP1.tar.gz 
@@ -77,7 +75,9 @@
                    // sh 'npm start --prefix /usr/share/nginx/html/'
                    //run the application in the background
                    //sh 'nohup npm start --prefix /usr/share/nginx/html/ &'
-                   sh 'nohup npm start --prefix /usr/share/nginx/html/ > /usr/share/nginx/html/app.log 2>&1 &'
+                  // sh 'nohup npm start --prefix /usr/share/nginx/html/ > /usr/share/nginx/html/app.log 2>&1 &'
+                  //use python script to run the application in the background
+                   sh 'python3 /usr/bin/application-scripts/run-Ip1-npm.py'
 
                 }
             }
@@ -86,7 +86,6 @@
            stage('Cleanup Workspace') {
             steps {
                 echo "Waiting for 1 minute before continuing..."
-                   sh 'sleep 180'
                  echo 'Clean....'
                 // Clean up the workspace to remove all files created during the build
                 cleanWs()
