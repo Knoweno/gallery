@@ -130,7 +130,7 @@
             steps {
                  echo 'Clean....'
                 // Clean up the workspace to remove all files created during the build
-               cleanWs()
+              // cleanWs()
             }
         }
 
