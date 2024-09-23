@@ -106,7 +106,7 @@
             }
         }*/
 
-        stage('SLACK...')
+        /*stage('SLACK...')
         {
             steps{
                 slackSend (
@@ -115,7 +115,15 @@
                 message: "Jenkins build *${env.JOB_NAME}* #${env.BUILD_NUMBER} has *FAILED*. Check details: ${env.BUILD_URL}"
             )
             }
-        }/*
+        }*/
+        
+        stage('SLACK...')
+        {
+            steps{
+                slackSend botUser: true, channel: 'C07NEKL3JMU', color: '#FF0000', message: '${env.BUILD_NUMBER} test from jenkins', teamDomain: 'Knowen_IP1', tokenCredentialId: 'JenkinsSlackConnection'
+            }
+        }
+        /*
         stage('Slack Notification') {
              steps {
 
