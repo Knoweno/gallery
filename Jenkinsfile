@@ -76,6 +76,7 @@
                    // sh 'npm start --prefix /usr/share/nginx/html/'
                    //run the application in the background
                    sh 'nohup npm start --prefix /usr/share/nginx/html/ &'
+
                 }
             }
         }
@@ -83,7 +84,7 @@
            stage('Cleanup Workspace') {
             steps {
                 echo "Waiting for 1 minute before continuing..."
-                    sleep 60
+                   sh 'sleep 60'
                  echo 'Clean....'
                 // Clean up the workspace to remove all files created during the build
                 cleanWs()
