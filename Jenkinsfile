@@ -106,11 +106,11 @@
             }
         }*/
         stage('Slack Notification') {
-            
+             steps {
 
             script {
 
-                echo 'Build succeeded! Sending Slack notification...'
+                //echo 'Build succeeded! Sending Slack notification...'
                 def successMessage = """
                 Jenkins build ${env.JOB_NAME} #${env.BUILD_NUMBER} has been successfully deployed!
                 \nCheck it out here: ${RENDER_SITE_URL}
@@ -124,7 +124,7 @@
                         "icon_emoji": ":white_check_mark:"
                     }' ${SLACK_WEBHOOK}
                 """
-            }
+            }}
         }
  
             
