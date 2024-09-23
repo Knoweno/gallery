@@ -57,7 +57,7 @@
                         tar --exclude='Jenkinsfile' --exclude='README.md' -czf /usr/share/nginx/html/${TAR_FILE} -C /var/lib/jenkins/workspace/ Moringa-IP1
                     '''
                     // sh "tar -czf '${env.TAR_FILE}' *.js" 
-                     sh "tar --exclude='Jenkinsfile' --exclude='README.md' -czf '${env.TAR_FILE}' *"
+                    // sh "tar --exclude='Jenkinsfile' --exclude='README.md' -czf '${env.TAR_FILE}' *"
                 }
             }
         }
@@ -116,16 +116,21 @@
         }
             stage('Archive Artifacts') {
             steps {
+                script{
+                    sh """
+                 rm -f Jenkinsfile README.md && \
+                     tar -czf '${env.TAR_FILE}' *
+                    """
+                }
                 archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
             }
         }
         
            stage('Cleanup Workspace') {
             steps {
-                echo "Waiting for 1 minute before continuing..."
                  echo 'Clean....'
                 // Clean up the workspace to remove all files created during the build
-               // cleanWs()
+               cleanWs()
             }
         }
 
