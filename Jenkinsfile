@@ -4,7 +4,11 @@
         // Jenkins to listen to GitHub webhooks
         githubPush()
     }
-    
+      environment {
+        RENDER_API_KEY = credentials('render-api-key') // Store your Render API key in Jenkins credentials
+        SERVICE_ID = 'gallery' // Replace with your Render service ID //https://gallery-gq2n.onrender.com
+        RENDER_URL = 'https://api.render.com/deploy/srv-croglm56l47c73fnhddg?key=wEe8ff0bDFE' // Render API endpoint for deployment
+    }
     stages {
         stage('Checkout Code') {
             steps {
@@ -56,7 +60,22 @@
                 }
             }
         }
-        
+         stage('Deploy to Render') {
+            steps {
+                script {
+                    def response = sh(script: """
+                        curl -X POST ${RENDER_URL} \
+                        -H "Authorization: Bearer ${RENDER_API_KEY}" \
+                        -H "Content-Type: application/json" \
+                        -d '{
+                            "serviceId": "${SERVICE_ID}"
+                        }'
+                    """, returnStdout: true).trim()
+                    
+                    echo "Deployment Response: ${response}"
+                }
+            }
+        }
         stage('Kill running application') {
                 steps {
                     script {
