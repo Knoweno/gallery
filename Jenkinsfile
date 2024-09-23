@@ -71,6 +71,7 @@
             steps {
                 script {
                    // sh 'npm start --prefix /usr/share/nginx/html/'
+                   //run the application in the background
                    sh 'nohup npm start --prefix /usr/share/nginx/html/ &'
                 }
             }
