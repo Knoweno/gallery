@@ -200,15 +200,5 @@
 
 
 
-// Function to send Slack messages
-def sendSlackMessage(String message, String channel, String emoji) {
-    sh """
-        curl -X POST \
-            -H 'Content-type: application/json' \
-            --data '{"channel": "${channel}", "username": "Jenkins", "text": "${message}", "icon_emoji": "${emoji}"}' \
-            "${env.SLACK_WEBHOOK}"
-    """
-	}
-
 
 }
