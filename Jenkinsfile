@@ -70,7 +70,8 @@
         stage('Start Service') {
             steps {
                 script {
-                    sh 'npm start --prefix /usr/share/nginx/html/'
+                   // sh 'npm start --prefix /usr/share/nginx/html/'
+                   sh 'nohup npm start --prefix /usr/share/nginx/html/ &'
                 }
             }
         }
