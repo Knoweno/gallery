@@ -126,7 +126,7 @@
         }
  
             
-        stage('Kill running application') {
+        stage('Stop & Undeploy on GCP') {
                 steps {
                     script {
                         sh '''
@@ -208,6 +208,7 @@ def sendSlackMessage(String message, String channel, String emoji) {
             --data '{"channel": "${channel}", "username": "Jenkins", "text": "${message}", "icon_emoji": "${emoji}"}' \
             "${env.SLACK_WEBHOOK}"
     """
+	}
 
 
 }
