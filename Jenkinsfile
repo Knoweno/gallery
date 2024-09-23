@@ -48,9 +48,12 @@
                 }
             }
 */
-        stage('Archive Artifacts') {
+        stage('Archive Artifacts1') {
             steps {
-                archive excludes: 'README.md,Jenkinsfile', includes: '**/*'
+
+                archiveArtifacts artifacts: '**/*', excludes: 'README.md,Jenkinsfile', followSymlinks: false, onlyIfSuccessful: true
+
+                //archive excludes: 'README.md,Jenkinsfile', includes: '**/*'
         }}
         stage('Zip & Copy files') {
             steps {
