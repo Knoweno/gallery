@@ -35,6 +35,7 @@
                 }
             }
         }
+        
         stage('Zip & Copy files') {
             steps {
                 script {
@@ -73,11 +74,7 @@
                     }
                 }
             }
-        stage('Archive Artifacts') {
-                steps {
-                    archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
-                }
-            }
+        
         stage('Deploy Application') {
             steps {
                 script {
