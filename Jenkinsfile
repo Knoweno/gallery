@@ -10,6 +10,11 @@
         RENDER_API_KEY = credentials('render-api-key') // Store your Render API key in Jenkins credentials
         SERVICE_ID = 'gallery' // Replace with your Render service ID //https://gallery-gq2n.onrender.com
         RENDER_URL = 'https://api.render.com/deploy/srv-croglm56l47c73fnhddg?key=wEe8ff0bDFE' // Render API endpoint for deployment
+        
+
+        SLACK_WEBHOOK = credentials('JenkinsSlackConnection') // Use the webhook URL from credentials
+        RENDER_SITE_URL = 'https://gallery-gytx.onrender.com' // Your deployed Render site URL
+        SLACK_CHANNEL = 'C07NEKL3JMU'  // Your Slack channel ID
     }
     stages {
         stage('Checkout Code') {
@@ -22,7 +27,7 @@
                 sh 'npm install'
             }
         }
-            stage('Deploy to Render122') {
+            stage('Deploy to Render.com') {
                         steps {
                             script {
                                 def response = sh(script: """
@@ -89,6 +94,38 @@
                 }
             }
         }
+/*
+    stage('Slack Notification') {
+    echo 'Deploy Passed Sending notification to Slack...'
+           script {
+                def message = "Deploy  to render for  ${env.JOB_NAME} #${env.BUILD_NUMBER} is successful. Check URL: ${RENDER_SITE_URL}"
+
+                sh """
+                    curl -X POST --data-urlencode 'payload={"channel": "#your-channel", "username": "jenkins", "text": "${message}", "icon_emoji": ":warning:"}' ${SLACK_WEBHOOK}
+                """
+            }
+        }*/
+        stage('Slack Notification') {
+            echo 'Build succeeded! Sending Slack notification...'
+
+            script {
+                def successMessage = """
+                Jenkins build ${env.JOB_NAME} #${env.BUILD_NUMBER} has been successfully deployed!
+                \nCheck it out here: ${RENDER_SITE_URL}
+                """
+                // Sending a success message to Slack
+                sh """
+                    curl -X POST --data-urlencode 'payload={
+                        "channel": "${SLACK_CHANNEL}",
+                        "username": "jenkins",
+                        "text": "${successMessage}",
+                        "icon_emoji": ":white_check_mark:"
+                    }' ${SLACK_WEBHOOK}
+                """
+            }
+        }
+ 
+            
         stage('Kill running application') {
                 steps {
                     script {
@@ -154,10 +191,23 @@
     post {
         success {
             echo 'Pipeline completed successfully!'
-            
+
         }
         failure {
             echo 'Pipeline failed. Please check the logs.'
         }
     }
+
+
+
+// Function to send Slack messages
+def sendSlackMessage(String message, String channel, String emoji) {
+    sh """
+        curl -X POST \
+            -H 'Content-type: application/json' \
+            --data '{"channel": "${channel}", "username": "Jenkins", "text": "${message}", "icon_emoji": "${emoji}"}' \
+            "${env.SLACK_WEBHOOK}"
+    """
+
+
 }
