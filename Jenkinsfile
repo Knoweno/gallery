@@ -37,7 +37,12 @@
         }
         stage('Archive Artifacts') {
                 steps {
-                    archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
+                    script {
+                    // Archive the tar file created during the build
+                    archiveArtifacts artifacts: "/usr/share/nginx/html/${env.TAR_FILE}", allowEmptyArchive: false
+                    echo "Archived ${env.TAR_FILE}"
+                }
+                    //archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
                 }
             }
         stage('Zip & Copy files') {
