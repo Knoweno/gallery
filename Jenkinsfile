@@ -137,13 +137,13 @@
 
 
 
-    stage('SLACK 2...') {
+    stage('SLACK 22...') { 
             steps {
                 slackSend(
                     botUser: true, 
-                    channel: 'C07NEKL3JMU', 
+                    channel: '${SLACK_CHANNEL}', 
                     color: '#36a64f',  // Green for success
-                    message: "Deployment to Render successful! Build ID: ${env.BUILD_ID}. Check the deployed site: https://gallery-gytx.onrender.com", 
+                    message: "Deployment to Render is successful! Build ID: ${env.BUILD_ID}. Check the deployed site: ${RENDER_URL}", 
                     teamDomain: 'Knowen_IP1', 
                     tokenCredentialId: 'JenkinsSlackConnection' // Uses the webhook from the Jenkins credentials
                 )
