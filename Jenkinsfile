@@ -53,7 +53,7 @@
                             echo "No application is using port 8002..."
                         fi
                     '''
-                     sh 'sleep 180'
+                     //sh 'sleep 180'
                 }
             }
         }
@@ -76,7 +76,8 @@
                 script {
                    // sh 'npm start --prefix /usr/share/nginx/html/'
                    //run the application in the background
-                   sh 'nohup npm start --prefix /usr/share/nginx/html/ &'
+                   //sh 'nohup npm start --prefix /usr/share/nginx/html/ &'
+                   sh 'nohup npm start --prefix /usr/share/nginx/html/ > /usr/share/nginx/html/app.log 2>&1 &'
 
                 }
             }
@@ -85,7 +86,7 @@
            stage('Cleanup Workspace') {
             steps {
                 echo "Waiting for 1 minute before continuing..."
-                   sh 'sleep 60'
+                   //sh 'sleep 60'
                  echo 'Clean....'
                 // Clean up the workspace to remove all files created during the build
                 cleanWs()
