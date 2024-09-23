@@ -128,7 +128,7 @@
         }
  
             
-        stage('Stop & Undeploy on GCP') {
+        /*stage('Stop & Undeploy on GCP') {
                 steps {
                     script {
                         sh '''
@@ -143,7 +143,7 @@
                         sh 'sleep 10'
                     }
                 }
-            }
+            }*/
         
         stage('Deploy Application to GCP') {
             steps {
