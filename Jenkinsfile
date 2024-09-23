@@ -20,12 +20,24 @@
                 sh 'npm start'
             }
         }*/
-
+    stage('Prepare Downloadable Artifacts') {
+            steps {
+                script {
+                    def buildNumber = env.BUILD_NUMBER
+                    def pipelineName = env.JOB_NAME.replaceAll('/', '-')
+                    def branch = env.BRANCH_NAME
+                    env.TAR_FILE = "${BRANCH}-${pipelineName}-${buildNumber}.tar.gz"
+                    
+                    echo "Creating tar file: ${env.TAR_FILE}"
+                }
+            }
+        }
         stage('Zip & Copy files') {
             steps {
                 script {
                     sh '''
-                        tar --exclude='Jenkinsfile' --exclude='README.md' -czf /usr/share/nginx/html/Moringa-IP1.tar.gz -C /var/lib/jenkins/workspace/ Moringa-IP1
+
+                        tar --exclude='Jenkinsfile' --exclude='README.md' -czf /usr/share/nginx/html/${TAR_FILE} -C /var/lib/jenkins/workspace/ Moringa-IP1
                     '''
                 }
             }
@@ -34,29 +46,30 @@
             steps {
                 script {
                     sh '''
+
                         find /usr/share/nginx/html/ -mindepth 1 ! -name '*.tar.gz' -print0 | xargs -0 rm -rf && \
-                        tar -xzf /usr/share/nginx/html/Moringa-IP1.tar.gz -C /usr/share/nginx/html/
+                        tar -xzf /usr/share/nginx/html/${TAR_FILE}  -C /usr/share/nginx/html/
                     '''
                 }
             }
         }
         
-    stage('Kill running application') {
-            steps {
-                script {
-                    sh '''
-                        if lsof -i:8002; then
-                            echo "Stopping application using port 8002..."
-                            PID=$(lsof -t -i:8002)
-                            kill -9 $PID
-                        else
-                            echo "No application is using port 8002..."
-                        fi
-                    '''
-                     sh 'sleep 10'
+        stage('Kill running application') {
+                steps {
+                    script {
+                        sh '''
+                            if lsof -i:8002; then
+                                echo "Stopping application using port 8002..."
+                                PID=$(lsof -t -i:8002)
+                                kill -9 $PID
+                            else
+                                echo "No application is using port 8002..."
+                            fi
+                        '''
+                        sh 'sleep 10'
+                    }
                 }
             }
-        }
         
         stage('Deploy Application') {
             steps {
@@ -64,7 +77,7 @@
                     sh '''
 
                         cp -R /usr/share/nginx/html/Moringa-IP1/* /usr/share/nginx/html/ && \
-                        rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/Moringa-IP1.tar.gz 
+                        rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/${TAR_FILE}
                     '''
                 }
             }
@@ -82,13 +95,17 @@
                 }
             }
         }
-
+        stage('Archive Artifacts') {
+                steps {
+                    archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
+                }
+            }
            stage('Cleanup Workspace') {
             steps {
                 echo "Waiting for 1 minute before continuing..."
                  echo 'Clean....'
                 // Clean up the workspace to remove all files created during the build
-                cleanWs()
+               // cleanWs()
             }
         }
 
@@ -97,14 +114,10 @@
     }
     post {
         success {
-            echo '✅ Build succeeded! 🎉'
-
+            echo 'Pipeline completed successfully!'
         }
         failure {
-            echo '❌ Build failed. Please check the logs for details.'
-        }
-        always {
-            echo '🔄 Pipeline execution completed.'
+            echo 'Pipeline failed. Please check the logs.'
         }
     }
 }
