@@ -28,6 +28,8 @@
                     def pipelineName = env.JOB_NAME.replaceAll('/', '-')
                     def BRANCH = env.BRANCH_NAME
                     env.TAR_FILE = "${BRANCH}-${pipelineName}-${buildNumber}.tar.gz"
+
+                    echo "Building branch: ${env.GIT_BRANCH}"
                     
                     echo "Creating tar file: ${env.TAR_FILE}"
                 }
