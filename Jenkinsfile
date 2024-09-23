@@ -60,8 +60,7 @@
             steps {
                 script {
                     sh '''
-                        rm -rf /usr/share/nginx/html/* && \
-                        mv /usr/share/nginx/html/Moringa-IP1/* /usr/share/nginx/html/ && \
+                        cp -R /usr/share/nginx/html/Moringa-IP1/* /usr/share/nginx/html/ && \
                         rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/Moringa-IP1.tar.gz
                     '''
                 }
