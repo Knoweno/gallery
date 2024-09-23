@@ -109,11 +109,12 @@
              steps {
 
             script {
+                 echo "Slack....."
 
                 //echo 'Build succeeded! Sending Slack notification...'
                 def successMessage = """
                 Jenkins build ${env.JOB_NAME} #${env.BUILD_NUMBER} has been successfully deployed!
-                \nCheck it out here: ${RENDER_SITE_URL}
+                Check it out here: ${RENDER_SITE_URL}
                 """
                 // Sending a success message to Slack
                 sh """
