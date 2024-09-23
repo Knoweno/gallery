@@ -34,7 +34,8 @@
             steps {
                 script {
                     sh '''
-                     
+                        find /usr/share/nginx/html/ -mindepth 1 ! -name '*.tar.gz' -exec rm -rf {} + && \
+
                         tar -xzf /usr/share/nginx/html/Moringa-IP1.tar.gz -C /usr/share/nginx/html/ 
                     '''
                 }
@@ -63,7 +64,6 @@
                     sh '''
                         cp -R /usr/share/nginx/html/Moringa-IP1/* /usr/share/nginx/html/ && \
                         rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/Moringa-IP1.tar.gz && \
-                       tar --exclude='Jenkinsfile' --exclude='README.md' -czf /usr/share/nginx/html/Moringa-IP1.tar.gz -C /var/lib/jenkins/workspace/ Moringa-IP1
 
                     '''
                 }
