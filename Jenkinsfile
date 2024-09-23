@@ -19,7 +19,7 @@
 
         RENDER_SITE_URL = 'https://gallery-gytx.onrender.com'
         SLACK_CHANNEL = 'C07NEKL3JMU'
-        SLACK_WEBHOOK = credentials('JenkinsSlackConnection')
+       
     }
     stages {
         stage('Checkout Code') {
@@ -141,11 +141,11 @@
             steps {
                 slackSend(
                     botUser: true, 
-                    channel: "${env.SLACK_CHANNEL}", 
+                    channel: '${env.SLACK_CHANNEL}', 
                     color: '#36a64f',  // Green for success
                     message: "Deployment to Render successful! Build ID: ${env.BUILD_ID}. Check the deployed site: ${env.RENDER_SITE_URL}", 
                     teamDomain: 'Knowen_IP1', 
-                    tokenCredentialId: "${env.SLACK_WEBHOOK}" // Uses the webhook from the Jenkins credentials
+                    tokenCredentialId: 'JenkinsSlackConnection' // Uses the webhook from the Jenkins credentials
                 )
             }
         }
