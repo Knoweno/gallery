@@ -105,6 +105,17 @@
                 """
             }
         }*/
+
+        stage('SLACK...')
+        {
+            steps{
+                slackSend (
+                channel: '$${SLACK_CHANNEL}', // Replace with your Slack channel name
+                color: '#FF0000',
+                message: "Jenkins build *${env.JOB_NAME}* #${env.BUILD_NUMBER} has *FAILED*. Check details: ${env.BUILD_URL}"
+            )
+            }
+        }/*
         stage('Slack Notification') {
              steps {
 
@@ -126,7 +137,7 @@
                     }' ${SLACK_WEBHOOK}
                 """
             }}
-        }
+        }*/
  
             
         /*stage('Stop & Undeploy on GCP') {
