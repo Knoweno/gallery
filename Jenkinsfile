@@ -1,7 +1,7 @@
  pipeline {
     agent any
     triggers {
-        // Jenkins to listen to GitHub webhooks
+        
         githubPush()
         
     }
@@ -21,19 +21,19 @@
             steps {
                 sh 'npm install'
             }
-        }/*
-stage('Deploy to Render122') {
-            steps {
-                script {
-                    def response = sh(script: """
-                        curl -X POST ${DEPLOY_HOOK_URL}
-                    """, returnStdout: true).trim()
-                    
-                    echo "Deployment Response: ${response}"
-                }
-            }
-*/
         }
+            stage('Deploy to Render122') {
+                        steps {
+                            script {
+                                def response = sh(script: """
+                                    curl -X POST ${DEPLOY_HOOK_URL}
+                                """, returnStdout: true).trim()
+                                
+                                echo "Deployment Response: ${response}"
+                            }
+                        }
+
+                    }
         stage('Prepare Downloadable Artifacts') {
             steps {
                 script {
@@ -72,7 +72,7 @@ stage('Deploy to Render122') {
                     '''
                 }
             }
-        }/*
+        }
          stage('Deploy to Render') {
             steps {
                 script {
@@ -88,7 +88,7 @@ stage('Deploy to Render122') {
                     echo "Deployment Response: ${response}"
                 }
             }
-        }*/
+        }
         stage('Kill running application') {
                 steps {
                     script {
