@@ -5,9 +5,9 @@ def run_npm_start():
     try:
         # Start the npm application in the background using nohup
         with open('/usr/share/nginx/html/app.log', 'a') as log_file:
-            subprocess.Popen(['nohup', 'npm', 'start'], cwd='/usr/share/nginx/html/', stdout=log_file, stderr=l>
+            subprocess.Popen(['nohup', 'npm', 'start'], cwd='/usr/share/nginx/html/', stdout=log_file, stderr=log_file)
 
-        print("NPM start executed successfully in the background..........")
+        print("NPM start executed successfully in the background.2.........")
     except Exception as e:
         print(f"Error executing npm start: {e}", file=sys.stderr)
         sys.exit(1)
