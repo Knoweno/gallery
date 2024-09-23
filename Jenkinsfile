@@ -48,10 +48,10 @@
                 }
             }
 */
-               stage('Archive Artifacts') {
+        stage('Archive Artifacts') {
             steps {
                 archive excludes: 'README.md,Jenkinsfile', includes: '**/*'
-        }
+        }}
         stage('Zip & Copy files') {
             steps {
                 script {
