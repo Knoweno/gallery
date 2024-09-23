@@ -26,11 +26,10 @@
                 script {
                     def buildNumber = env.BUILD_NUMBER
                     def pipelineName = env.JOB_NAME.replaceAll('/', '-')
-                    def BRANCH = env.BRANCH_NAME
+                    def BRANCH = env.GIT_BRANCH.tokenize('/').last()
                     env.TAR_FILE = "${BRANCH}-${pipelineName}-${buildNumber}.tar.gz"
 
-                     def branchName = env.GIT_BRANCH.tokenize('/').last()
-                    echo "Building branch: ${branchName}"
+                    echo "Building branch: ${BRANCH}"
 
                     echo "Creating tar file: ${env.TAR_FILE}"
                 }
@@ -74,7 +73,11 @@
                     }
                 }
             }
-        
+        stage('Archive Artifacts') {
+                steps {
+                    archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
+                }
+            }
         stage('Deploy Application') {
             steps {
                 script {
@@ -99,11 +102,7 @@
                 }
             }
         }
-        stage('Archive Artifacts') {
-                steps {
-                    archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
-                }
-            }
+        
            stage('Cleanup Workspace') {
             steps {
                 echo "Waiting for 1 minute before continuing..."
