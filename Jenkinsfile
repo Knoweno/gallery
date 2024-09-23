@@ -21,7 +21,7 @@
             }
         }*/
 
-        stage('Zip files') {
+        stage('Zip & Copy files') {
             steps {
                 script {
                     sh '''
@@ -34,9 +34,8 @@
             steps {
                 script {
                     sh '''
-                        find /usr/share/nginx/html/ -mindepth 1 ! -name '*.tar.gz' -exec rm -rf {} + && \
-
-                        tar -xzf /usr/share/nginx/html/Moringa-IP1.tar.gz -C /usr/share/nginx/html/ 
+                        find /usr/share/nginx/html/ -mindepth 1 ! -name '*.tar.gz' -print0 | xargs -0 rm -rf && \
+                        tar -xzf /usr/share/nginx/html/Moringa-IP1.tar.gz -C /usr/share/nginx/html/
                     '''
                 }
             }
