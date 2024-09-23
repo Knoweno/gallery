@@ -48,10 +48,10 @@
                 }
             }
 */
-        stage('Archive Artifacts1') {
+        stage('Archive Artifacts') {
             steps {
 
-                archiveArtifacts artifacts: '**/*', excludes: 'README.md,Jenkinsfile', followSymlinks: false, onlyIfSuccessful: true
+                archiveArtifacts artifacts: '**/*', excludes: 'README.md,Jenkinsfile', allowEmptyArchive: false, onlyIfSuccessful: true
 
                 //archive excludes: 'README.md,Jenkinsfile', includes: '**/*'
         }}
