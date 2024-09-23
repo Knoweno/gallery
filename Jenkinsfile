@@ -35,7 +35,11 @@
                 }
             }
         }
-        
+        stage('Archive Artifacts') {
+                steps {
+                    archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
+                }
+            }
         stage('Zip & Copy files') {
             steps {
                 script {
