@@ -39,6 +39,23 @@
                 }
             }
         }
+        
+    stage('Unzip files') {
+            steps {
+                script {
+                    sh '''
+                        if lsof -i:8002; then
+                            echo "Stopping application using port 8002..."
+                            PID=$(lsof -t -i:8002)
+                            kill -9 $PID
+                        else
+                            echo "No application is using port 8002."
+                        fi
+                    '''
+                }
+            }
+        }
+        
         stage('Deploy Application') {
             steps {
                 script {

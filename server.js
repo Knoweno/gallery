@@ -43,7 +43,7 @@ app.use('/image', image);
 
  
 const PORT = process.env.PORT || 8002; //5000
-const HOST='http://34.122.91.7/';
+const HOST='http://34.122.91.7';
 //http://localhost
 app.listen(PORT,() =>{
     console.log(`Server is listening at ${HOST}:${PORT}`)
