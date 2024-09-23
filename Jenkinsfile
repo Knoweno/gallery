@@ -53,6 +53,7 @@
                             echo "No application is using port 8002..."
                         fi
                     '''
+                     sh 'sleep 180'
                 }
             }
         }
