@@ -15,11 +15,58 @@
                 sh 'npm install'
             }
         }
-         stage('Run Application') {
+         /*stage('Run Application') {
             steps {
                 sh 'npm start'
             }
+        }*/
+
+        stage('Zip files') {
+            steps {
+                script {
+                    sh '''
+                        tar --exclude='Jenkinsfile' --exclude='README.md' -czf /usr/share/nginx/html/Moringa-IP1.tar.gz -C /var/lib/jenkins/workspace/ Moringa-IP1
+                    '''
+                }
+            }
         }
+        stage('Unzip files') {
+            steps {
+                script {
+                    sh '''
+                        tar -xzf /usr/share/nginx/html/Moringa-IP1.tar.gz -C /usr/share/nginx/html/ 
+                    '''
+                }
+            }
+        }
+        stage('Deploy Application') {
+            steps {
+                script {
+                    sh '''
+                        mv /usr/share/nginx/html/Moringa-IP1/* /usr/share/nginx/html/ && \
+                        rm -rf /usr/share/nginx/html/Moringa-IP1 /usr/share/nginx/html/Moringa-IP1.tar.gz
+                    '''
+                }
+            }
+        }
+        stage('Start Service') {
+            steps {
+                script {
+                    sh 'npm start --prefix /usr/share/nginx/html/'
+                }
+            }
+        }
+
+           stage('Cleanup Workspace') {
+            steps {
+                 echo 'Clean....'
+                // Clean up the workspace to remove all files created during the build
+                cleanWs()
+            }
+        }
+
+
+
     }
     post {
         success {
