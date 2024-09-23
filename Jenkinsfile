@@ -4,6 +4,7 @@
         // Jenkins to listen to GitHub webhooks
         githubPush()
     }
+    
     stages {
         stage('Checkout Code') {
             steps {
@@ -25,7 +26,7 @@
                 script {
                     def buildNumber = env.BUILD_NUMBER
                     def pipelineName = env.JOB_NAME.replaceAll('/', '-')
-                    def branch = env.BRANCH_NAME
+                    def BRANCH = env.BRANCH_NAME
                     env.TAR_FILE = "${BRANCH}-${pipelineName}-${buildNumber}.tar.gz"
                     
                     echo "Creating tar file: ${env.TAR_FILE}"
