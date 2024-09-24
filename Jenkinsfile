@@ -30,6 +30,15 @@
         stage('Install NodeJS Dependencies') {
             steps {
                 sh 'npm install'
+                sh 'npm install mocha'
+                sh 'npm install chai'
+                sh 'npm install --save-dev mocha'
+                sh 'npm install mongoose'
+            }
+        }
+         stage('Run Tests using Mocha') {
+            steps {
+                sh 'npm test'
             }
         }
         stage('Deploy to Render.com') {
