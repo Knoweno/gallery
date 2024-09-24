@@ -1,26 +1,26 @@
-process.env.NODE_ENV = 'test'; // Set environment to 'test'
+process.env.NODE_ENV = 'test';   
 
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const server = require('../server');
-const { expect } = chai;
+var chai = require('chai');
+var chaiHttp = require('chai-http');
 
-chai.use(chaiHttp); // Enable chai-http middleware for HTTP requests
+var server = require('../server');
+var should = chai.should();
+var expect = chai.expect;
 
-describe('Photos API', function () {
-    // Increase timeout in case of longer response times
-    this.timeout(60000);
+chai.use(chaiHttp);
 
-    it('should list ALL photos on / GET', async function () {
-        const res = await chai.request(server).get('/'); // Send GET request to root endpoint
+describe('Image', function(){
 
-        // Assert that response status is 200
-        expect(res).to.have.status(200);
 
-        // Check response is HTML
-        expect(res).to.be.html;
-
-        // Check response body is an object
-        expect(res.body).to.be.an('object');
+    it('should list ALL photos on / GET', function(done){
+        this.timeout(60000);
+        chai.request(server)
+        .get('/')
+        .end(function(err,res){
+            res.should.have.status(200);
+            res.should.be.html;
+            res.body.should.be.a('object')
+            done();
+        })
     });
-});
+})

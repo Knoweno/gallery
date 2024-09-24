@@ -1,11 +1,16 @@
-// models/Photo.js
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const photoSchema = new mongoose.Schema({
-  name: String,
-  url: String
+// create a schema for our database
+var imageSchema = new Schema({
+    name: String,
+    path: String,
+    size: Number,
+    date: {type: Date, default: Date() }
+
 });
 
-const Photo = mongoose.model('Photo', photoSchema);
+// convert the schema into a Model
+let Image = mongoose.model('Image', imageSchema);
 
-module.exports = Photo;
+module.exports = Image;
