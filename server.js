@@ -3,10 +3,12 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 const config = require('./_config'); //to get db connection
-//test
-// Define routes
+
 let index = require('./routes/index');
 let image = require('./routes/image');
+
+// Initializing the app
+const app = express();
 
 // connecting the database
 //let mongodb_url = 'mongodb://localhost:27017/';
@@ -22,8 +24,22 @@ db.once('open', ()=>{
     console.log('Database connected successfully.....')
 })
 
-// Initializing the app
-const app = express();
+const MONGODB_URI = process.env.MONGODB_URI || config.mongoURI[app.settings.env]
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true  },(err)=>{
+    if (err) {
+        console.log(err)
+    }else{
+        console.log(`Connected to Database: ${MONGODB_URI}`)
+    }
+});
+
+// test if the database has connected successfully
+// let db = mongoose.connection;
+// db.once('open', ()=>{
+//     console.log('Database connected successfully')
+// })
+
+
 
 
 // View Engine
@@ -42,8 +58,8 @@ app.use('/image', image);
 
 
  
-const PORT = process.env.PORT || 8002; //5000
-const HOST='http://34.122.91.7';
+const PORT = process.env.PORT || 5000; //5000
+const HOST='http://localhost';
 //http://localhost
 app.listen(PORT,() =>{
     console.log(`Server is listening at ${HOST}:${PORT}`)
